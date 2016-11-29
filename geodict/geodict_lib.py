@@ -14,7 +14,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import MySQLdb, string, StringIO
+import MySQLdb, string, io
 import geodict_config
 from tempfile import TemporaryFile
 from struct import unpack, pack, calcsize
@@ -26,7 +26,7 @@ def find_locations_in_text(text):
     try:
         cursor = get_database_connection()
     except:
-        print "Database connection failed. Have you set up geodict_config.py with your credentials?"
+        print("Database connection failed. Have you set up geodict_config.py with your credentials?")
         return None
 
     current_index = len(text)-1
@@ -442,7 +442,7 @@ def is_location_word(cursor, text, text_starting_index, previous_result):
 
 def get_database_connection():
 
-    db=MySQLdb.connect(host=geodict_config.host,user=geodict_config.user,passwd=geodict_config.password,port=geodict_config.port)
+    db=MySQLdb.connect(host=geodict_config.host,user=geodict_config.user,passwd=geodict_config.password,port=geodict_config.port, charset='utf8')
     cursor=db.cursor()
     cursor.execute('USE '+geodict_config.database+';')
 

@@ -22,7 +22,7 @@ def load_cities(cursor):
         INDEX(last_word(10)));
     """)
     
-    reader = csv.reader(open(geodict_config.source_folder+'worldcitiespop.csv', 'rb'))
+    reader = csv.reader(open(geodict_config.source_folder+'worldcitiespop.csv', 'r'))
     
     for row in reader:
         try:
@@ -59,7 +59,7 @@ def load_countries(cursor):
         INDEX(last_word(10)));
     """)
     
-    reader = csv.reader(open(geodict_config.source_folder+'countrypositions.csv', 'rb'))
+    reader = csv.reader(open(geodict_config.source_folder+'countrypositions.csv', 'r'))
     country_positions = {}
 
     for row in reader:
@@ -72,7 +72,7 @@ def load_countries(cursor):
 
         country_positions[country_code] = { 'lat': lat, 'lon': lon }
         
-    reader = csv.reader(open(geodict_config.source_folder+'countrynames.csv', 'rb'))
+    reader = csv.reader(open(geodict_config.source_folder+'countrynames.csv', 'r'))
 
     for row in reader:
         try:
@@ -111,7 +111,7 @@ def load_regions(cursor):
         INDEX(last_word(10)));
     """)
 
-    reader = csv.reader(open(geodict_config.source_folder+'us_statepositions.csv', 'rb'))
+    reader = csv.reader(open(geodict_config.source_folder+'us_statepositions.csv', 'r'))
     us_state_positions = {}
 
     for row in reader:
@@ -124,7 +124,7 @@ def load_regions(cursor):
 
         us_state_positions[region_code] = { 'lat': lat, 'lon': lon }
     
-    reader = csv.reader(open(geodict_config.source_folder+'us_statenames.csv', 'rb'))
+    reader = csv.reader(open(geodict_config.source_folder+'us_statenames.csv', 'r'))
 
     country_code = 'US'
 

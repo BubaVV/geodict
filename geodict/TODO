@@ -1,0 +1,6 @@
+Refactor populate_database.py to LOAD DATA INFILE method - should be much much faster
+Population should have DEFAULT 0
+Change configuration to dictionary with default values
+Maybe introduce tests? But they depends on MySQL
+Regions table seems to fail at load
+Add Readme.rst

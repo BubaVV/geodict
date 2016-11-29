@@ -18,7 +18,7 @@
 source_folder = './source_data/'
 
 # Your MySQL user credentials
-user = 'root'
+user = 'geodict'
 password = ''
 
 # The address and port number of your database server

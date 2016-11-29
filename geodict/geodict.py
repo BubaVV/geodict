@@ -94,6 +94,6 @@ elif format.lower() == 'csv':
         lon = found_tokens[0]['lon']
         writer.writerow([name, type, lat, lon])
 else:
-    print "Unknown output format '"+format+"'"
+    print("Unknown output format '"+format+"'")
     exit()
     

@@ -8,8 +8,14 @@ Installing
 
 This library uses a large geo-dictionary of countries, regions and cities, all stored in a MySQL database. The source data required is included in this project. To get started:
 
+- Create user geodict without the password, database geodict and grant user full rights on this base. You can do it by these commands in the MySQL console or PHPMyAdmin:
+
+CREATE USER 'geodict'@'localhost';
+CREATE DATABASE IF NOT EXISTS `geodict` ;
+GRANT ALL PRIVILEGES ON `geodict` . * TO 'geodict'@'localhost';
+
 - Enter the details of your MySQL server and account into geodict_config.py
-- Install the MySQLdb module for Python ('easy_install MySQL-python' may do the trick)
+- Install the MySQLdb module for Python ('pip install mysqlclient ' may do the trick)
 - cd into the folder you've unpacked this to, and run ./populate_database.py
 
 This make take several minutes, depending on your machine, since there's over 2 million cities

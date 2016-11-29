@@ -17,16 +17,16 @@
 import sys, string
 
 def print_usage_and_exit(cliargs):
-	print "Usage:"
+	print("Usage:")
 	
-	for long, arginfo in cliargs.items():
+	for int, arginfo in list(cliargs.items()):
 		short = arginfo['short']
 		type = arginfo['type']
 		required = (type=='required')
 		optional = (type=='optional')
 		description = arginfo['description']
 		
-		output = '-'+short+'/--'+long+' '
+		output = '-'+short+'/--'+int+' '
 
 		if optional or required:
 			output += '<value> '
@@ -36,7 +36,7 @@ def print_usage_and_exit(cliargs):
 		if required:
 			output += ' (required)'
 
-		print output
+		print(output)
 	
 	exit()
 
@@ -58,7 +58,7 @@ def get_options(cliargs):
         elif namepart.startswith('-'):
             shortname = namepart[1:]
             longname = shortname
-            for name, info in cliargs.items():
+            for name, info in list(cliargs.items()):
                 if shortname==info['short']:
                     longname = name
                     break
@@ -69,7 +69,7 @@ def get_options(cliargs):
             options['unnamed'].append(namepart)
         else:
             if longname not in cliargs:
-                print "Unknown argument '"+longname+"'"
+                print("Unknown argument '"+longname+"'")
                 print_usage_and_exit(cliargs)
             
             arginfo = cliargs[longname]
@@ -82,17 +82,17 @@ def get_options(cliargs):
                 value = sys.argv[index+1]
                 skip_next = True
             else:
-                print "Missing value after '"+longname+"'"
+                print("Missing value after '"+longname+"'")
                 print_usage_and_exit(cliargs)
 
             options[longname] = value
 
-    for longname, arginfo in cliargs.items():
+    for longname, arginfo in list(cliargs.items()):
         type = arginfo['type']
 
         if longname not in options:
             if type == 'required':
-                print "Missing required value for '"+longname+"'"
+                print("Missing required value for '"+longname+"'")
                 print_usage_and_exit(cliargs)
             elif type == 'optional':
                 if not 'default' in arginfo:
