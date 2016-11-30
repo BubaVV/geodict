@@ -4,3 +4,4 @@ Change configuration to dictionary with default values
 Maybe introduce tests? But they depends on MySQL
 Regions table seems to fail at load
 Add Readme.rst
+Introduce downloading of source, maybe compressed

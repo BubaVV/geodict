@@ -444,7 +444,7 @@ def get_database_connection():
 
     db=MySQLdb.connect(host=geodict_config.host,user=geodict_config.user,passwd=geodict_config.password,port=geodict_config.port, charset='utf8')
     cursor=db.cursor()
-    cursor.execute('USE '+geodict_config.database+';')
+    #cursor.execute('USE '+geodict_config.database+';')
 
     return cursor
 

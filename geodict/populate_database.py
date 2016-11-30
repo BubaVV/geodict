@@ -1,52 +1,27 @@
 #!/usr/bin/env python
 
-import csv, os, os.path, MySQLdb
+import csv, os, os.path, MySQLdb, sys
 import geodict_config
 from geodict_lib import *
 
 def wipe_and_init_database(cursor):
-    cursor.execute("""DROP DATABASE geodict;""")
-    cursor.execute("""CREATE DATABASE geodict;""")
+    cursor.execute("""DROP DATABASE IF EXISTS geodict;""")
+    cursor.execute("""CREATE DATABASE IF NOT EXISTS `geodict` DEFAULT COLLATE 'utf8mb4_unicode_ci';""")
     cursor.execute("""USE geodict;""")
 
 def load_cities(cursor):
     cursor.execute("""CREATE TABLE IF NOT EXISTS cities (
-        city VARCHAR(80),
+        city VARCHAR(100),
         country CHAR(2),
         PRIMARY KEY(city, country),
         region_code CHAR(2),
-        population INT,
+        population INT DEFAULT 0,
         lat FLOAT,
         lon FLOAT,
-        last_word VARCHAR(32),
+        last_word VARCHAR(100),
         INDEX(last_word(10)));
     """)
-    
-    reader = csv.reader(open(geodict_config.source_folder+'worldcitiespop.csv', 'r'))
-    
-    for row in reader:
-        try:
-            country = row[0]
-            city = row[1]
-            region_code = row[3]
-            population = row[4]
-            lat = row[5]
-            lon = row[6]
-        except:
-            continue
-
-        if population is '':
-            population = 0
-
-        city = city.strip()
-
-        last_word, index, skipped = pull_word_from_end(city, len(city)-1, False)
-
-        cursor.execute("""
-            INSERT IGNORE INTO cities (city, country, region_code, population, lat, lon, last_word)
-                values (%s, %s, %s, %s, %s, %s, %s)
-            """,
-            (city, country, region_code, population, lat, lon, last_word))
+    cursor.execute('LOAD DATA LOCAL INFILE \'%s\' INTO TABLE cities CHARACTER SET utf8mb4 FIELDS TERMINATED BY ","' % (geodict_config.source_folder+'worldcitiespop.csv'))
 
 def load_countries(cursor):
     cursor.execute("""CREATE TABLE IF NOT EXISTS countries (
